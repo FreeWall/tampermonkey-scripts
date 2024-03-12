@@ -2,7 +2,7 @@
 // @name         Google Search Map Link
 // @namespace    http://tampermonkey.net/
 // @version      2024-03-08
-// @description  Fuck EU!
+// @description  Add link to map image in Google Search. Fuck EU!
 // @author       FreeWall
 // @match        *https://www.google.com/search?q*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=google.com
@@ -32,7 +32,8 @@
 
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', updateMapLink);
-    } else {
-        updateMapLink();
+        return;
     }
+
+    updateMapLink();
 })();
