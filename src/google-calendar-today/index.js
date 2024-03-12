@@ -9,14 +9,19 @@
 // @require      https://raw.githubusercontent.com/FreeWall/tampermonkey-scripts/master/src/google-calendar-today/index.js
 // ==/UserScript==
 
+console.log('loaded 1');
+
 (function () {
     'use strict';
 
     if (window.scriptLoaded) {
+        console.log('already loaded');
         return;
     }
 
     window.scriptLoaded = true;
+
+    console.log('loaded 2');
 
     var todayClass = 'F262Ye';
     var highlightBackgroundColor = '#4d90fe30';
