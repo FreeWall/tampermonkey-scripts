@@ -9,22 +9,25 @@
 // @require      https://raw.githubusercontent.com/FreeWall/tampermonkey-scripts/master/src/google-calendar-today/index.js
 // ==/UserScript==
 
-console.log('loaded 1');
+window.__tampermonkeyscript_options = window.__tampermonkeyscript_options || {
+    highlightBackgroundColor: '#4d90fe30',
+};
+
+// ----------------------------------------------------------------------
+// do not copy the code below if you want to have this script up to date
+// ----------------------------------------------------------------------
 
 (function () {
     'use strict';
 
-    if (window.scriptLoaded) {
-        console.log('already loaded');
+    if (window.__tampermonkeyscriptLoaded) {
         return;
     }
 
-    window.scriptLoaded = true;
-
-    console.log('loaded 2');
+    window.__tampermonkeyscriptLoaded = true;
 
     var todayClass = 'F262Ye';
-    var highlightBackgroundColor = '#4d90fe30';
+    var highlightBackgroundColor = window.__tampermonkeyscript_options.highlightBackgroundColor;
 
     setTimeout(() => tryToColorToday(), 1000);
 
