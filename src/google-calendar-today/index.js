@@ -10,21 +10,19 @@
 // ==/UserScript==
 
 window.__tampermonkeyscript_options = window.__tampermonkeyscript_options || {
-    highlightBackgroundColor: '#4d90fe30',
+    highlightBackgroundColor: '#4d90fe30', // customizable
 };
 
-// ----------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 // do not copy the code below if you want to have this script up to date
-// ----------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 (function () {
-    'use strict';
-
-    if (window.__tampermonkeyscriptLoaded) {
+    if (window.__tampermonkeyscript_loaded) {
         return;
     }
 
-    window.__tampermonkeyscriptLoaded = true;
+    window.__tampermonkeyscript_loaded = true;
 
     var todayClass = 'F262Ye';
     var highlightBackgroundColor = window.__tampermonkeyscript_options.highlightBackgroundColor;
