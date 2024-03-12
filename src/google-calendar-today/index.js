@@ -4,14 +4,22 @@
 // @version      2024-02-21
 // @description  Highlight today box in Google Calendar
 // @author       FreeWall
-// @match        *https://calendar.google.com/calendar/u/0/r/month/*
+// @match        *https://calendar.google.com/calendar/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=google.com
+// @require      https://raw.githubusercontent.com/FreeWall/tampermonkey-scripts/master/src/google-calendar-today/index.js
 // ==/UserScript==
-
-const highlightBackgroundColor = '#4d90fe40';
 
 (function () {
     'use strict';
+
+    if (window.scriptLoaded) {
+        return;
+    }
+
+    window.scriptLoaded = true;
+
+    var todayClass = 'F262Ye';
+    var highlightBackgroundColor = '#4d90fe30';
 
     setTimeout(() => tryToColorToday(), 1000);
 
@@ -42,7 +50,7 @@ const highlightBackgroundColor = '#4d90fe40';
     }
 
     function tryToColorToday_MonthView(retry) {
-        let today = document.querySelector('h2[class~="F262Ye"]');
+        let today = document.querySelector('h2[class~="' + todayClass + '"]');
         if (!today) {
             !retry && setTimeout(() => tryToColorToday_MonthView(true), 300);
             return;
@@ -59,7 +67,7 @@ const highlightBackgroundColor = '#4d90fe40';
         }
 
         setTimeout(() => {
-            let todayBox = document.querySelector('h2[class~="F262Ye"]')?.parentElement;
+            let todayBox = document.querySelector('h2[class~="' + todayClass + '"]')?.parentElement;
             if (todayBox.style.backgroundColor.length == 0) {
                 tryToColorToday_MonthView(true);
             }
@@ -67,24 +75,33 @@ const highlightBackgroundColor = '#4d90fe40';
     }
 
     function tryToColorToday_WeekView(retry) {
-        let today = document.querySelector('h2 > div[class~="F262Ye"]');
-        if (!today) {
+        let todayTitle = document.querySelector('h2 > div[class~="' + todayClass + '"]');
+        if (!todayTitle) {
             !retry && setTimeout(() => tryToColorToday_WeekView(true), 300);
             return;
         }
 
         clearTodays();
 
-        let todayBox = today.parentElement;
+        let todayBox = todayTitle.parentElement;
         todayBox.style.backgroundColor = highlightBackgroundColor;
         todayBox.dataset.todaycolored = true;
+
+        let todayGrid = document.querySelector('div[role="gridcell"][class~="' + todayClass + '"]');
+        if (!todayGrid) {
+            !retry && setTimeout(() => tryToColorToday_WeekView(true), 300);
+            return;
+        }
+
+        todayGrid.style.backgroundColor = highlightBackgroundColor;
+        todayGrid.dataset.todaycolored = true;
 
         if (retry) {
             return;
         }
 
         setTimeout(() => {
-            let todayBox = document.querySelector('h2 > div[class~="F262Ye"]')?.parentElement;
+            let todayBox = document.querySelector('h2 > div[class~="' + todayClass + '"]')?.parentElement;
             if (todayBox.style.backgroundColor.length == 0) {
                 tryToColorToday_WeekView(true);
             }
