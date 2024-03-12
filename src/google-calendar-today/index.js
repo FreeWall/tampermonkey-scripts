@@ -3,14 +3,13 @@
 // @namespace    http://tampermonkey.net/
 // @version      2024-02-21
 // @description  Highlight today box in Google Calendar
-// @author       FreeWall
 // @match        *https://calendar.google.com/calendar/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=google.com
 // @require      https://raw.githubusercontent.com/FreeWall/tampermonkey-scripts/master/src/google-calendar-today/index.js
 // ==/UserScript==
 
 window.__tampermonkeyscript_options = window.__tampermonkeyscript_options || {
-    highlightBackgroundColor: '#4d90fe30', // customizable
+    highlightColor: '#4d90fe30', // customizable
 };
 
 // -----------------------------------------------------------------------------
@@ -24,22 +23,22 @@ window.__tampermonkeyscript_options = window.__tampermonkeyscript_options || {
 
     window.__tampermonkeyscript_loaded = true;
 
-    var todayClass = 'F262Ye';
-    var highlightBackgroundColor = window.__tampermonkeyscript_options.highlightBackgroundColor;
+    const todayClass = 'F262Ye';
+    const highlightColor = window.__tampermonkeyscript_options.highlightColor;
 
     setTimeout(() => tryToColorToday(), 1000);
 
-    window.navigation.addEventListener('navigate', (event) => {
+    window.navigation.addEventListener('navigate', () => {
         setTimeout(() => tryToColorToday(), 300);
     });
 
-    document.addEventListener('visibilitychange', (event) => {
+    document.addEventListener('visibilitychange', () => {
         if (document.visibilityState == 'visible') {
             setTimeout(() => tryToColorToday(), 300);
         }
     });
 
-    window.addEventListener('focus', (event) => {
+    window.addEventListener('focus', () => {
         setTimeout(() => tryToColorToday(), 300);
     });
 
@@ -65,7 +64,7 @@ window.__tampermonkeyscript_options = window.__tampermonkeyscript_options || {
         clearTodays();
 
         let todayBox = today.parentElement;
-        todayBox.style.backgroundColor = highlightBackgroundColor;
+        todayBox.style.backgroundColor = highlightColor;
         todayBox.dataset.todaycolored = true;
 
         if (retry) {
@@ -90,7 +89,7 @@ window.__tampermonkeyscript_options = window.__tampermonkeyscript_options || {
         clearTodays();
 
         let todayBox = todayTitle.parentElement;
-        todayBox.style.backgroundColor = highlightBackgroundColor;
+        todayBox.style.backgroundColor = highlightColor;
         todayBox.dataset.todaycolored = true;
 
         let todayGrid = document.querySelector('div[role="gridcell"][class~="' + todayClass + '"]');
@@ -99,7 +98,7 @@ window.__tampermonkeyscript_options = window.__tampermonkeyscript_options || {
             return;
         }
 
-        todayGrid.style.backgroundColor = highlightBackgroundColor;
+        todayGrid.style.backgroundColor = highlightColor;
         todayGrid.dataset.todaycolored = true;
 
         if (retry) {
