@@ -11,3 +11,5 @@
 window.__tampermonkeyscript_options = window.__tampermonkeyscript_options || {
     highlightColor: '#4d90fe30', // customizable
 };
+
+window.__tampermonkeyscript_run();

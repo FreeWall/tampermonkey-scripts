@@ -1,12 +1,6 @@
-(function () {
-    if (window.__tampermonkeyscript_loaded) {
-        return;
-    }
-
-    window.__tampermonkeyscript_loaded = true;
-
+window.__tampermonkeyscript_run = () => {
     const todayClass = 'F262Ye';
-    const highlightColor = window.__tampermonkeyscript_options?.highlightColor;
+    const highlightColor = window.__tampermonkeyscript_options.highlightColor;
 
     setTimeout(tryToColorToday, 1000);
 
@@ -59,4 +53,4 @@
             }
         }, 300);
     }
-})();
+};
