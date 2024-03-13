@@ -1,2 +1,2 @@
-![image](./screenshot_month.png)
-![image](./screenshot_week.png)
+![image](./assets/screenshot_month.png)
+![image](./assets/screenshot_week.png)

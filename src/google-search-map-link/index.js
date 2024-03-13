@@ -9,7 +9,8 @@
 // ==/UserScript==
 
 // -----------------------------------------------------------------------------
-// do not copy the code below if you want to have this script up to date
+// do not copy the code below if you want to have this script up to date,
+// otherwise remove "@require" line from comment block above
 // -----------------------------------------------------------------------------
 
 (function () {
