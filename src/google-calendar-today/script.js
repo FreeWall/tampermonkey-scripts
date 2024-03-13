@@ -6,7 +6,7 @@
     window.__tampermonkeyscript_loaded = true;
 
     const todayClass = 'F262Ye';
-    const highlightColor = window.__tampermonkeyscript_options.highlightColor;
+    const highlightColor = window.__tampermonkeyscript_options?.highlightColor;
 
     setTimeout(tryToColorToday, 1000);
 
