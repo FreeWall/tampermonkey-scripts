@@ -1,4 +1,4 @@
-# Highlight today box in Google Calendar
+# Add missing link to map thumbnail element in Google Search for EU users.
 
 ## Installation
 
@@ -14,10 +14,8 @@ https://www.tampermonkey.net/
 
 1. Copy the content of [index.js](./index.js)
 2. Place the copied content into Tampermonkey extension using `Create a new script` button
-3. (Optional) Customize the highlight color of today box in `window.__tampermonkeyscript_options` object
-4. 🎉
+3. 🎉
 
 ## Screenshots
 
-![image](./assets/screenshot_month.png)
-![image](./assets/screenshot_week.png)
+![image](./assets/screenshot.png)
