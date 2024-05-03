@@ -1,5 +1,8 @@
 window.__tampermonkeyscript_run = () => {
-    // business type
+    /**
+     * Additional result map
+     * example: Madison Square Garden, Yew York
+     */
     function resultsType1() {
         const addressSection = document.querySelector('div[data-attrid="kc:/location/location:address"]');
         if (!addressSection) {
@@ -19,7 +22,10 @@ window.__tampermonkeyscript_run = () => {
         }
     }
 
-    // address type
+    /**
+     * Address map with directions button
+     * example: Veletržní 24 Praha
+     */
     function resultsType2() {
         const img = document.querySelector('div#lu_map');
         if (!img) {
@@ -50,9 +56,34 @@ window.__tampermonkeyscript_run = () => {
         link.appendChild(img);
     }
 
+    /**
+     * Non-specific address map
+     * example: Veletržní Praha
+     */
+    function resultsType3() {
+        const img = document.querySelector('div#lu_map');
+        if (!img) {
+            return;
+        }
+
+        const parent = img.closest('.dirs')?.parentElement;
+        if (!parent) {
+            return;
+        }
+
+        const place = parent.textContent?.trim();
+        const mapUrl = location.origin + '/maps/place/' + place;
+        const link = document.createElement('a');
+        link.setAttribute('href', mapUrl);
+
+        img.parentNode.insertBefore(link, img);
+        link.appendChild(img);
+    }
+
     function updateMapLink() {
         resultsType1();
         resultsType2();
+        resultsType3();
     }
 
     if (document.readyState === 'loading') {
