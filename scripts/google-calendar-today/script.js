@@ -1,8 +1,10 @@
 window.__tampermonkeyscript_run = () => {
     const todayClass = 'F262Ye';
-    const highlightColor = window.__tampermonkeyscript_options.highlightColor;
+    const options = window.__tampermonkeyscript_options || {
+        highlightColor: '#4d90fe30',
+    };
 
-    setTimeout(tryToColorToday, 1000);
+    setTimeout(tryToColorToday, 500);
 
     window.navigation.addEventListener('navigate', () => {
         setTimeout(tryToColorToday, 300);
@@ -18,10 +20,11 @@ window.__tampermonkeyscript_run = () => {
         setTimeout(tryToColorToday, 300);
     });
 
-    function clearTodays() {
+    function clearTodays(selector) {
         const today = document.querySelector('div[data-todaycolored]');
-        if (today) {
+        if (today && (!selector || today.querySelector(selector))) {
             today.style.backgroundColor = null;
+            delete today.dataset.todaycolored;
         }
     }
 
@@ -39,7 +42,9 @@ window.__tampermonkeyscript_run = () => {
             return;
         }
 
-        todayElement.style.backgroundColor = highlightColor;
+        clearTodays(selector);
+
+        todayElement.style.backgroundColor = options.highlightColor;
         todayElement.dataset.todaycolored = true;
 
         if (retry) {
