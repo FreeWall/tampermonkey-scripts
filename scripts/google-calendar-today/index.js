@@ -8,8 +8,7 @@
 // @require      https://raw.githubusercontent.com/FreeWall/tampermonkey-scripts/master/scripts/google-calendar-today/script.js
 // ==/UserScript==
 
-window.__tampermonkeyscript_options = window.__tampermonkeyscript_options || {
-    highlightColor: '#4d90fe30', // customizable
-};
+// customizable
+// window.__tampermonkeyscript_options = { highlightColor: '#cc0000' };
 
 window.__tampermonkeyscript_run();
