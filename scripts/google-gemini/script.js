@@ -58,6 +58,39 @@ window.__tampermonkeyscript_run = () => {
         observer.observe(sidenav, { attributes: true, attributeOldValue: true });
     }
 
+    function getActiveConversationItem() {
+        const items = document.querySelectorAll('.conversation-items-container');
+        for (let i = 0; i < items.length; i++) {
+            const item = items[i];
+            const link = item.querySelector('.conversation');
+            if (link && link.classList?.contains('selected')) {
+                return item;
+            }
+        }
+    }
+
+    /**
+     * Open the delete conversation modal on delete key press
+     */
+    function openDeleteConversationModal() {
+        const item = getActiveConversationItem();
+        if (!item) {
+            return;
+        }
+
+        const actionsElement = item.querySelector('.conversation-actions-container button');
+        if (!actionsElement) {
+            return;
+        }
+
+        actionsElement.click();
+
+        setTimeout(() => {
+            const button = document.querySelector('[data-test-id="delete-button"]');
+            button.click();
+        }, 1);
+    }
+
     const appRoot = document.getElementById('app-root');
     if (!appRoot) {
         return;
@@ -73,4 +106,12 @@ window.__tampermonkeyscript_run = () => {
     });
 
     observer.observe(appRoot, { childList: true, subtree: true });
+
+    document.addEventListener('keyup', (event) => {
+        if (event.which != 46) {
+            return;
+        }
+
+        openDeleteConversationModal();
+    });
 };
