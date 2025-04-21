@@ -86,9 +86,18 @@ window.__tampermonkeyscript_run = () => {
         actionsElement.click();
 
         setTimeout(() => {
-            const button = document.querySelector('[data-test-id="delete-button"]');
-            button.click();
-        }, 1);
+            const deleteButton = document.querySelector('[data-test-id="delete-button"]');
+            deleteButton.click();
+
+            setTimeout(() => {
+                const confirmButton = document.querySelector('[data-test-id="confirm-button"]');
+                if (!confirmButton) {
+                    return;
+                }
+
+                confirmButton.focus();
+            }, 10);
+        }, 10);
     }
 
     const appRoot = document.getElementById('app-root');
