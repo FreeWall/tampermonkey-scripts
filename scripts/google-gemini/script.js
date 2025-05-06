@@ -90,7 +90,7 @@ window.__tampermonkeyscript_run = () => {
             deleteButton.click();
 
             setTimeout(() => {
-                const confirmButton = document.querySelector('[data-test-id="confirm-button"]');
+                const confirmButton = document.querySelector('mat-dialog-container [data-test-id="confirm-button"]');
                 if (!confirmButton) {
                     return;
                 }
@@ -118,6 +118,18 @@ window.__tampermonkeyscript_run = () => {
 
     document.addEventListener('keyup', (event) => {
         if (event.which != 46) {
+            return;
+        }
+
+        if (document.activeElement.tagName === 'INPUT') {
+            return;
+        }
+
+        if (document.activeElement.classList.contains('textarea')) {
+            return;
+        }
+
+        if (document.querySelector('mat-dialog-container')) {
             return;
         }
 
