@@ -1,10 +1,15 @@
 window.__tampermonkeyscript_run = () => {
-    let historyExpanded = false;
+    // do not run in iframe
+    if (window.self !== window.top) {
+        return;
+    }
+
     /**
      * Expand the history section on first load
      */
-    function expandHistory() {
-        if (historyExpanded) {
+    let historyExpanded1 = false;
+    function expandHistory1() {
+        if (historyExpanded1) {
             return;
         }
 
@@ -13,10 +18,28 @@ window.__tampermonkeyscript_run = () => {
             return;
         }
 
-        historyExpanded = true;
-
+        historyExpanded1 = true;
         button.click();
         button.remove();
+    }
+
+    let historyExpanded2 = false;
+    function expandHistory2() {
+        if (historyExpanded2) {
+            return;
+        }
+
+        const button = document.querySelector('[data-test-id="load-more-button"]');
+        if (!button) {
+            return;
+        }
+
+        historyExpanded2 = true;
+        button.click();
+    }
+
+    function removeHistorySpinner() {
+        document.querySelector('.loading-history-spinner-container')?.remove();
     }
 
     /**
@@ -108,7 +131,9 @@ window.__tampermonkeyscript_run = () => {
     const observer = new MutationObserver((mutationsList, observer) => {
         for (const mutation of mutationsList) {
             if (mutation.type === 'childList') {
-                expandHistory();
+                removeHistorySpinner();
+                expandHistory1();
+                expandHistory2();
                 observeSideNav();
             }
         }
@@ -125,7 +150,7 @@ window.__tampermonkeyscript_run = () => {
             return;
         }
 
-        if (document.activeElement.classList.contains('textarea')) {
+        if (document.activeElement.classList.contains('new-input-ui') && document.activeElement.textContent !== '') {
             return;
         }
 
