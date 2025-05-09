@@ -7,9 +7,9 @@ window.__tampermonkeyscript_run = () => {
     /**
      * Expand the history section on first load
      */
-    let historyExpanded1 = false;
-    function expandHistory1() {
-        if (historyExpanded1) {
+    let historyExpanded = false;
+    function expandHistory() {
+        if (historyExpanded) {
             return;
         }
 
@@ -18,28 +18,9 @@ window.__tampermonkeyscript_run = () => {
             return;
         }
 
-        historyExpanded1 = true;
+        historyExpanded = true;
         button.click();
         button.remove();
-    }
-
-    let historyExpanded2 = false;
-    function expandHistory2() {
-        if (historyExpanded2) {
-            return;
-        }
-
-        const button = document.querySelector('[data-test-id="load-more-button"]');
-        if (!button) {
-            return;
-        }
-
-        historyExpanded2 = true;
-        button.click();
-    }
-
-    function removeHistorySpinner() {
-        document.querySelector('.loading-history-spinner-container')?.remove();
     }
 
     /**
@@ -131,9 +112,7 @@ window.__tampermonkeyscript_run = () => {
     const observer = new MutationObserver((mutationsList, observer) => {
         for (const mutation of mutationsList) {
             if (mutation.type === 'childList') {
-                removeHistorySpinner();
-                expandHistory1();
-                expandHistory2();
+                expandHistory();
                 observeSideNav();
             }
         }
