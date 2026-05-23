@@ -5,25 +5,6 @@ window.__tampermonkeyscript_run = () => {
     }
 
     /**
-     * Expand the history section on first load
-     */
-    let historyExpanded = false;
-    function expandHistory() {
-        if (historyExpanded) {
-            return;
-        }
-
-        const button = document.querySelector('[data-test-id="show-more-button"]');
-        if (!button) {
-            return;
-        }
-
-        historyExpanded = true;
-        button.click();
-        button.remove();
-    }
-
-    /**
      * Do not collapse the side nav
      */
     let sideNavObserved = false;
@@ -50,7 +31,7 @@ window.__tampermonkeyscript_run = () => {
             }
 
             if (isCollapsed) {
-                const sideNavButton = document.querySelector('[data-test-id="side-nav-menu-button"]');
+                const sideNavButton = document.querySelector('.side-nav-sparkle-button');
                 if (!sideNavButton) {
                     return;
                 }
@@ -63,11 +44,11 @@ window.__tampermonkeyscript_run = () => {
     }
 
     function getActiveConversationItem() {
-        const items = document.querySelectorAll('.conversation-items-container');
+        const items = document.querySelectorAll('conversations-list mat-nav-list gem-nav-list-item');
         for (let i = 0; i < items.length; i++) {
             const item = items[i];
-            const link = item.querySelector('.conversation');
-            if (link && link.classList?.contains('selected')) {
+            const link = item.querySelector('a.is-active');
+            if (link) {
                 return item;
             }
         }
@@ -82,7 +63,7 @@ window.__tampermonkeyscript_run = () => {
             return;
         }
 
-        const actionsElement = item.querySelector('.conversation-actions-container button');
+        const actionsElement = item.querySelector('.gem-conversation-actions-menu-button');
         if (!actionsElement) {
             return;
         }
@@ -94,7 +75,8 @@ window.__tampermonkeyscript_run = () => {
             deleteButton.click();
 
             setTimeout(() => {
-                const confirmButton = document.querySelector('mat-dialog-container [data-test-id="confirm-button"]');
+                const confirmButton = document.querySelector('mat-dialog-container [data-test-id="confirm-button"] button');
+                console.log(confirmButton);
                 if (!confirmButton) {
                     return;
                 }
@@ -112,7 +94,6 @@ window.__tampermonkeyscript_run = () => {
     const observer = new MutationObserver((mutationsList, observer) => {
         for (const mutation of mutationsList) {
             if (mutation.type === 'childList') {
-                expandHistory();
                 observeSideNav();
             }
         }
