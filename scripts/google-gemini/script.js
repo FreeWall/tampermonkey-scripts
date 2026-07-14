@@ -75,8 +75,9 @@ window.__tampermonkeyscript_run = () => {
             deleteButton.click();
 
             setTimeout(() => {
-                const confirmButton = document.querySelector('mat-dialog-container [data-test-id="confirm-button"] button');
-                console.log(confirmButton);
+                const buttons = Array.from(document.querySelectorAll('mat-dialog-container button'));
+                const confirmButton = buttons.find(button => button.textContent.trim() === 'Vymazat');
+
                 if (!confirmButton) {
                     return;
                 }
